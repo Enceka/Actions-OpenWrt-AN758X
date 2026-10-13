@@ -59,17 +59,6 @@ clone() {  # clone <url> <dir> [branch]
 #   luci-app/
 #   ├── luci-app-natmode/
 #   └── luci-app-pon-status/
-#
-# 所以需要 clone 整个仓库，再把子目录拷到 package/custom/。
-# 目录名必须等于包名（luci.mk: PKG_NAME ?= $(notdir ${CURDIR})），
-# 否则 config 里的 CONFIG_PACKAGE_xxx 符号对不上。
-#
-# ⚠️ 为什么不再用 CI 仓库自带的 packages/ 本地包：
-#    上游 natmode 0.1.2 修了一个关键问题 ——
-#    「LuCI 保存时 rpcd 暂存值 CLI 读不到」，导致点了保存但模式没应用
-#    （commit: fix(natmode): apply button missing on PonWrt LuCI fork）。
-#    修法是 apply 支持显式传参：apply <mode> [<fullcone6>] [<auto_offload>]
-#    本地旧版是从 UCI 读值，在保存流程中会读到旧值。
 # =========================================================
 if [ "$ADD_LUCI_APP" = "true" ]; then
   LUCI_APP_URL="https://github.com/qwe3017/luci-app"
